@@ -172,19 +172,20 @@ describe('SyncPromise', () => {
     });
     describe('.race', () => {
         it('resolves to the first resolving promise', () => {
-            return SyncPromise.race([SyncPromise.delay(1).then(() => 1), SyncPromise.delay(5000).then(() => 2)]).then(
+            const short = SyncPromise.delay(1).then(() => 1);
+            const long = SyncPromise.delay(2000).then(() => 2);
+            return SyncPromise.all([SyncPromise.race([short, long]).then(
                 result => {
                     expect(result).toBe(1);
                 }
-            );
+            ), long]);
         });
         it('rejects if the first settled promise is rejected', () => {
-            return SyncPromise.race([
-                SyncPromise.delay(1).then(() => {
-                    throw new Error('error');
-                }),
-                SyncPromise.delay(5000).then(() => 2)
-            ])
+            const short = SyncPromise.delay(1).then(() => {
+                throw new Error('error');
+            });
+            const long = SyncPromise.delay(2000).then(() => 2);
+            return SyncPromise.all([SyncPromise.race([short])
                 .catch(error => {
                     expect(error).toMatchObject({
                         message: 'error'
@@ -193,7 +194,7 @@ describe('SyncPromise', () => {
                 })
                 .then(result => {
                     expect(result).toBe('error');
-                });
+                }), long]);
         });
         it('accepts non-promise values', () => {
             return SyncPromise.race([SyncPromise.defer().then(() => 1), 2, 3]).then(result => {

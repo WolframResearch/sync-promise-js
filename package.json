@@ -15,7 +15,8 @@
     "README.md"
   ],
   "scripts": {
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.15.6",
