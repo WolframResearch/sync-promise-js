@@ -1,16 +1,6 @@
-/* global jasmine */
 import SyncPromise from '../src/SyncPromise';
 
 describe('SyncPromise', () => {
-    // let originalTimeout;
-    // beforeEach(() => {
-    //     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    //     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000; // 20 seconds
-    // });
-    // afterEach(() => {
-    //     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-    // });
-
     function setTimeout(func, delay) {
         SyncPromise.defer().then(func);
         return 1;
@@ -20,7 +10,7 @@ describe('SyncPromise', () => {
         const f = new SyncPromise(resolve => {
             resolve(42);
         });
-        const handler = jasmine.createSpy('handler');
+        const handler = jest.fn();
         f.then(handler);
         expect(handler).toHaveBeenCalledWith(42);
         f.then(value => {
@@ -352,7 +342,7 @@ describe('SyncPromise', () => {
             });
     });
     it('supports .catch', done => {
-        const handler = jasmine.createSpy('catch-handler');
+        const handler = jest.fn();
         new SyncPromise((resolve, reject) => {
             reject(42);
         })
@@ -418,7 +408,7 @@ describe('SyncPromise', () => {
         });
     });
     it('executes sync handlers when the SyncPromise is resolved synchronously', done => {
-        const handler = jasmine.createSpy('async-handler');
+        const handler = jest.fn();
         new SyncPromise(resolve => resolve(1)).thenAsync(handler).thenSync(value => {
             expect(value).toEqual(1);
             expect(handler).not.toHaveBeenCalled();
@@ -426,7 +416,7 @@ describe('SyncPromise', () => {
         });
     });
     it('executes async handlers when the SyncPromise is resolved asynchronously', done => {
-        const handler = jasmine.createSpy('async-handler');
+        const handler = jest.fn();
         new SyncPromise(resolve => {
             setTimeout(() => {
                 resolve(44);
@@ -484,14 +474,6 @@ describe('SyncPromise', () => {
             });
     });
     describe('(long async specs)', () => {
-        let origTimeout;
-        beforeEach(() => {
-            origTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000; // 60 seconds
-        });
-        afterEach(() => {
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = origTimeout;
-        });
         const CALL_COUNT = 30000;
         it('supports long .then chains without overflowing the stack', done => {
             let p = SyncPromise.delay().then(() => 0);
