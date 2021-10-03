@@ -1,0 +1,25 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "outDir": "lib/",
+    "declaration": true,
+    "allowJs": true,
+    "lib": ["ES2017", "DOM"],
+    "target": "ES2015",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true
+  }
+}

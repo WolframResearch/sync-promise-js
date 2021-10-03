@@ -1,6 +1,34 @@
 {
   "name": "sync-promise-js",
-  "version": "0.0.1",
-  "main": "index.js",
-  "license": "MIT"
+  "version": "1.0.0",
+  "main": "lib/SyncPromise.js",
+  "types": "lib/SyncPromise.d.ts",
+  "keywords": [
+    "wolfram",
+    "promise",
+    "sync",
+    "synchronous"
+  ],
+  "license": "MIT",
+  "files": [
+    "lib/",
+    "README.md"
+  ],
+  "scripts": {
+    "prepublishOnly": "rollup -c",
+    "test": "jest",
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.2",
+    "jest": "^27.2.4",
+    "rollup": "^2.58.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  }
 }
